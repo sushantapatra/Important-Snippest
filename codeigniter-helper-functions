@@ -1,0 +1,116 @@
+function clean_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}	
+function randomPassword(){
+    $alphabet = '!@#$&abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    $pass = array(); //remember to declare $pass as an array
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    for ($i = 0; $i < 8; $i++) {
+        $n = rand(0, $alphaLength);
+        $pass[] = $alphabet[$n];
+    }
+    return implode($pass); //turn the array into a string
+}
+function getAge($dob){
+    $dob=date("Y-m-d",strtotime($dob));
+    $dateOfBirth =$dob;
+    $today = date("Y-m-d");
+    $diff = date_diff(date_create($dateOfBirth), date_create($today));
+    $age_month =$diff->format('%m');
+    if($age_month>6){
+        $age=$diff->format('%y')+1;
+    }else{
+        $age=$diff->format('%y');
+    }
+    return $age;
+}
+function regNoGenerate($DSM_DSCD){
+    $ci=& get_instance();
+    $ci->load->database();
+    $param1='OD/';
+    $param2=$ci->db->select('DSM_SHNM')->get_where('dst_mst01', array('DSM_DSCD' =>$DSM_DSCD))->row()->DSM_SHNM;
+    $param3='/UW/';
+    $results=$ci->db->query("SELECT count(*) TOTREC, max(sl_no) as sl_no FROM reg_mst WHERE present_district=$DSM_DSCD")->row();
+    if($results->TOTREC ==0){
+        $param4=01;
+    }else{
+        $param4=sprintf("%02d", ($results->sl_no +1));
+    }
+    $reg_no= $param1.$param2. $param3.$param4.'/'.date('Y');
+    return  $reg_no;
+}
+function getSlNo($DSM_DSCD){
+    $ci=& get_instance();
+    $ci->load->database();
+    $results=$ci->db->query("SELECT count(*) TOTREC, max(sl_no) as sl_no FROM reg_mst WHERE present_district=$DSM_DSCD")->row();
+    if($results->TOTREC ==0){
+        $slno=1;
+    }else{
+        $slno=$results->TOTREC +1;
+    }
+    return  $slno;
+}
+//send otp
+function send_message($mobile='',$message=''){
+    // Account details
+    $apiKey = urlencode('926e7f-63d3fb-ea1089-f29a2f-bc3dc9');
+
+    // Message details
+    $numbers = urlencode($mobile);
+    $sender = urlencode('OKCLED');
+    $message =rawurlencode($message);
+    // Prepare data for POST request
+    $data = 'apikey=' . $apiKey . '&dest_mobileno=' . $numbers . "&senderid=" . $sender . "&message=" . $message."&msgtype=UNI&response=Y";
+    // Send the GET request with cURL
+    $ch = curl_init('http://www.smsjust.com/sms/user/urlsms.php?' . $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    //http://www.smsjust.com/sms/user/urlsms.php?apikey=926e7f-63d3fb-ea1089-f29a2f-bc3dc9&senderid=OKCLED&dest_mobileno=9437911966&msgtype=UNI&message=Test&response=Y
+    // Process your response here
+    
+    if($response){
+        $status=$response;
+    }
+    //echo $status;
+}
+
+function email_send($data=array()){
+    $ci=& get_instance();
+    $ci->load->database();
+}
+function mail_send($data=array()){
+    $ci=& get_instance();
+    $ci->load->library("PhpMailerLib");
+    $mail = $ci->phpmailerlib->load();
+    // SMTP configuration
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'development.experiment@gmail.com';//enter your gmail address
+    $mail->Password = 'enter_development'; //password of your gmail account
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+
+    $mail->setFrom('development.experiment@gmail.com', 'NijuktiSanjog');
+    $mail->addreplyTo('development.experiment@gmail.com', 'NijuktiSanjo');
+
+    // Add a recipient
+   $mail->addAddress($data['from'],  $data['from_name']); //email address of recipient
+
+    // Email subject
+    $mail->Subject =  $data['subject'];
+
+   //If sending HTML email set to true else set to false
+    $mail->isHTML(true);
+    $mail->Body =$data['body'];
+    if($mail->send())
+       return True;
+    else
+        return False;
+      //echo 'Mail not send'.'<br> Error:'. $mail->ErrorInfo;
+
+}
