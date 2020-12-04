@@ -1,0 +1,95 @@
+<h1>Ajax file upoload</h1>
+<!--- Html Code -->
+
+ <form action="#"  method="post" enctype="multipart/form-data">
+	<div class="form-group mb-2">
+		<div class="wrapper-image-preview">
+			<div class="box" style="width: 250px;" >
+				 <?php if($result->passbook_pic ==''){ ?>
+				<img src="<?php echo base_url('uploads/form1/labourphoto/passbook_placeholder.jpeg');?>" class="card-img-top bank_photo" alt="bank_photo"  onclick="performClick('bank_photo');">
+				 <?php }else{ ?>
+					<img src="<?php  echo base_url();?>uploads/documents/<?= $reg_id;?>/<?=$result->passbook_pic;?>" class="card-img-top bank_photo" alt="bank_photo"  onclick="performClick('bank_photo');"> 
+				<?php } ?>
+				<div class="upload-options" >
+				   <!--  <label for="bank_photo" class="btn"> <i class="mdi mdi-camera"></i> 
+						Upload Bank Passbook
+					 <br>   <small>(330 X 70)</small> </label> -->
+					<input id="bank_photo" style="visibility:hidden;" type="file" class="image-upload" name="photo" accept="image/*">
+				</div>
+			 </div>
+		</div>
+	</div>
+	<input type="hidden" name="field_name" value="passbook_pic">
+	<button type="button" class="btn btn-primary btn-block UploadPassbook">Upload Bank Passbook</button>
+</form>
+
+<script type="text/javascript">
+$('.UploadPassbook').on('click', function(){
+    var file_data = $('#bank_photo').prop('files')[0];   
+    var form_data = new FormData();                  
+    form_data.append('file', file_data);
+    $.ajax({
+        url: '<?= base_url('index.php/RegisterController/ajax_passbook_upload');?>', // point to server-side PHP script 
+        dataType: 'text',  // what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        success: function(dataResult){
+           var data = JSON.parse(dataResult);
+            var id=data.insert_id;
+            if(data.status == 200){
+                swal('Success!', '', 'success');
+                console.log('profile pic updated successfully');
+            }
+            else if(data.status==201){
+               alert("Error Occured ! Try again");
+            }
+        },
+        error:function(jqXHR , reason, ex){
+                $('.error').text(reason + "-" + jqXHR .status + " ie " + jqXHR .statusText);
+                console.log(jqXHR.responseText);
+                
+            }
+    });
+})
+
+//Show choose image 
+$("#bank_photo").change(function(){
+    var class_name='bank_photo';
+    readIMG(this,class_name);
+});
+function readIMG(input,class_name) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('.'+class_name).attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+
+<!-- PHP Codeigniter Code -->
+<?php
+function ajax_passbook_upload(){
+	$insert_id=$this->session->userdata('reg_id');
+	$field_name='passbook_pic';
+	if (!file_exists('uploads/documents/'.$insert_id)) {
+		mkdir('uploads/documents/'. $insert_id, 0777, true);
+	}
+	if ($_FILES['file']['name'] == "") {
+		$data[$field_name] = $field_name.'placeholder.png';
+	}else{
+		$data[$field_name] =$field_name.'.jpg';
+		move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/documents/'. $insert_id.'/'.$data[$field_name]);
+	}
+	$data['reg_id'] = $insert_id ;
+	$res=$this->registration->update_document($data);
+	echo json_encode(['status'=>200,]);
+}
+	
+?>
