@@ -1,0 +1,177 @@
+<h1>Multiple data insert using ajax and php </h1>
+<!--- Html Code -->
+
+ <table class="table bg-white" cellspacing="5px" cellpadding="5%" >
+	<thead>
+		<tr class="text-center">
+		  <!--  <th nowrap>Sl. No.<br> (କ୍ର. ନଂ.)</th>   -->
+			<th nowrap>Dependent Name<br> (ଆଶ୍ରିତବ୍ୟକ୍ତିର ନାମ)</th>
+			<th nowrap>Gender <br>(ଲିଙ୍ଗ)</th>
+			<th nowrap>Age <br>(ବୟସ)</th>
+			<th nowrap>Relationship <br>(ହିତାଧିକାରୀଙ୍କସହିତ ସମ୍ପର୍କ)</th>
+			<th nowrap>Class In which Studying for children<br> (ଯେଉଁ ଶ୍ରେଣୀରେ ପଢୁଛନ୍ତି) (ପିଲାମାନଙ୍କ ପାଇଁ)</th>
+			<th nowrap><i class="fa fa-plus-circle addRow" style="font-size: 20px;padding-bottom: 10px;"></i></th>
+		</tr>
+	</thead>
+	<tbody id="body">
+		<?php 
+		$slid=1;
+		foreach ($dep_result as $value) { ?>
+		
+		<tr id="<?= $slid;?>">
+		   <!--  <td nowrap><?= $slid;?></td> -->
+			<td nowrap>
+				<input type="text" class="form-control dep_name"  placeholder="Dependent Name"
+				 value="<?= ($dep_result)?$value->dep_name:'';?>" >
+			</td>
+			<td nowrap>
+				<select class="dep_gender" class="form-control">
+					<option value="">Gender</option>
+					<option value="1"  <?= ($value->dep_gender ==1)?'selected':'';?> >Male</option>
+					<option value="2" <?= ($value->dep_gender ==2)?'selected':'';?> >Female</option>
+					<option value="3" <?= ($value->dep_gender ==3)?'selected':'';?> >Transgender</option>
+				</select>
+			  
+			</td>
+			<td nowrap>
+				<input type="number" class="form-control dep_age"   placeholder="Age" value="<?= ($dep_result )?$value->dep_age:'';?>">
+			</td>
+			<td nowrap>
+				<input type="text" class="form-control dep_relation" placeholder="Relationship" 
+				 value="<?= ($dep_result)?$value->dep_relation:'';?>">
+			</td>
+			<td nowrap>
+				<input type="text" class="form-control dep_child"  placeholder="Class In which Studying for children"  value="<?= ($dep_result)?$value->dep_child:'';?>">
+			</td>
+			<td nowrap><a href="javascript:void(0);" class="DeleteRow" data-id="<?= ($dep_result)?$value->dep_id:'';?>"><i class="fa  fa-trash text-danger" style="font-size:20px"></i></a></td>
+		</tr>  
+		<input type="hidden" name="dep_id" class="dep_id" value="<?= ($dep_result)?$value->dep_id:'';?>" > 
+		<?php $slid++; } ?>
+	</tbody>
+	<tfoot id="save">
+		<tr class="text-center text-info">
+			<td colspan="6"> <i class="fa fa-floppy-o dataSave"></i> Save</td>
+		</tr>
+	</tfoot>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.addRow').click(function(){
+        var markup = '<tr>'+
+                '<td nowrap><input type="text" class="form-control dep_name"  placeholder="Dependent Name"></td>'+
+                '<td nowrap>'+
+                    '<select class="form-control dep_gender">'+
+                        ' <option value="">Gender</option>'+
+                        ' <option value="1">Male</option>'+
+                        ' <option value="2">Female</option>'+
+                        ' <option value="3">Transgender</option>'+
+                    ' </select>'+
+                '</td>'+
+                '<td nowrap><input type="number" class="form-control dep_age"   placeholder="Age"></td>'+
+                '<td nowrap><input type="text" class="form-control dep_relation" placeholder="Relationship"> </td>'+
+                '<td nowrap><input type="text" class="form-control dep_child"  placeholder="Class In which Studying for children"></td>'+
+                '<td nowrap><a href="javascript:void(0);" class="remCF"><i class="fa  fa-times text-danger" style="font-size:20px"></i></a></td>'+
+            '</tr>';
+        $("#body").append(markup);
+        $('#save').show();
+    })
+    $("#body").on('click', '.remCF', function() {
+        $(this).parent().parent().remove();
+    });
+    $('.DeleteRow').click(function(){
+        var delId=$(this).attr("data-id");
+        $.ajax({
+            url: "<?= base_url('index.php/RegisterController/delete_dep_data');?>",
+            type: "POST",
+            data: {
+                dep_id:delId
+             },
+            success : function(data){
+                console.log(data); /* alerts the response from php.*/
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    })
+    
+    $('.dataSave').click(function(){
+        var item_name = [];
+        var item_gender = [];
+        var item_age = [];
+        var item_relation = [];
+        var item_child = [];
+        $('.dep_name').each(function(){
+           item_name.push($(this).val());
+        });
+        $('.dep_gender option:selected').each(function(){
+           item_gender.push($(this).val());
+        });
+        $('.dep_age').each(function(){
+           item_age.push($(this).val());
+        });
+        $('.dep_relation').each(function(){
+           item_relation.push($(this).val());
+        });
+        $('.dep_child').each(function(){
+           item_child.push($(this).val());
+        });
+
+        $.ajax({
+            url: "<?= base_url('index.php/RegisterController/temp_data_save');?>",
+            type: "POST",
+            data: {
+                name : item_name ,
+                gender : item_gender,
+                age:item_age,
+                relation:item_relation,
+                child:item_child,
+             },
+            success : function(data){
+                console.log(data); /* alerts the response from php.*/
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    })
+  
+  
+});
+</script>
+
+<!-- PHP Codeigniter Code -->
+<?php
+function temp_data_save(){
+	$nameArr		= $_POST["name"];
+	$genderArr      = $_POST["gender"];
+	$ageArr         = $_POST["age"];
+	$relationArr    = $_POST["relation"];
+	$childArr       = $_POST["child"];
+
+	for($i =0; $i < count($nameArr); $i++){
+		if(($nameArr[$i] != "")){
+			$dep_data=[
+				'dep_name'      =>ucwords(clean_input($nameArr[$i])),
+				'dep_gender'    =>clean_input($genderArr[$i]),
+				'dep_age'       =>clean_input($ageArr[$i]),
+				'dep_relation'  =>ucwords(clean_input($relationArr[$i])),
+				'dep_child'     =>clean_input($childArr[$i]),
+				'reg_id'        =>$insert_id 
+			];
+			$depres=$this->registration->add_dependent($dep_data);
+		}
+		
+	}
+    echo json_encode(['status'=>200,]);
+}
+function clean_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+?>
