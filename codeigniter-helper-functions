@@ -77,7 +77,14 @@ function send_message($mobile='',$message=''){
     }
     //echo $status;
 }
-
+function limit_text($text, $limit) {
+    if (str_word_count($text, 0) > $limit) {
+        $words = str_word_count($text, 2);
+        $pos   = array_keys($words);
+        $text  = substr($text, 0, $pos[$limit]) . '...';
+    }
+    return $text;
+}
 function email_send($data=array()){
     $ci=& get_instance();
     $ci->load->database();
