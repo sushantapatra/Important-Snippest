@@ -1,0 +1,300 @@
+<!-- Create html to pdf in codeigniter & dompdf  -->
+Step-1
+	extract dompdf_0-8-6.zip file in application/libraries folder
+	
+step-2
+	Create a Pdf.php file 
+step-3
+	create a helper file name common_helper.php
+	
+step-4
+	register common_helper.php file in application/config/autoload.php file
+	
+step-5
+	create a PdfController.php  file in applicaton/controller/
+	
+step-6
+	create a welcome.php  file in applicaton/controller/views/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//Pdf.php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+/**
+ *
+ * Convert HTML to PDF in CodeIgniter applications.
+ *
+ * @package            CodeIgniter
+ * @subpackage        Libraries
+ * @category        Libraries
+ * @author            Hostmystory
+ * @link            https://www.hostmystory.com
+ */
+
+// Dompdf namespace
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Dompdf\FontMetrics;
+
+class Pdf{
+    public function __construct(){   
+        // require_once autoloader 
+        require_once dirname(__FILE__).'/dompdf/autoload.inc.php';
+        $options = new Options();
+        $options->set('defaultFont', 'sans-serif');
+        $pdf = new DOMPDF($options);
+        //$pdf->setBasePath(base_url() . 'assets/bootstrap.min.css');
+        $CI =& get_instance();
+        $CI->dompdf = $pdf;
+
+    }
+}
+?>
+
+// common_helper.php
+function generate_pdf($name, $tpl, $data){
+    $ci = &get_instance();
+    $data['data'] = $data;
+    $ci->load->view($tpl, $data);
+    // Get output html
+    $html = $ci->output->get_output();
+    // add external css library
+    $html .= '<link href="' . base_url() . 'assets/bootstrap.min.css" rel="stylesheet">';
+    //$html .= '<link rel="preconnect" href="https://fonts.gstatic.com">';
+    //$html .= '<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&display=swap" rel="stylesheet">';
+    //$html .= '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">';
+    // Load pdf library
+    $ci->load->library('pdf');
+    $ci->dompdf->loadHtml($html);
+    // setup size
+    $ci->dompdf->setPaper('A4', 'portrait');
+    // Render the HTML as PDF
+    $ci->dompdf->render();
+    // Output  PDF (1 = download and 0 = preview)
+    $ci->dompdf->stream($name, array("Attachment" => 0));
+}
+
+//PdfController.php
+<?php
+if(!defined('BASEPATH'))  exit('No direct script access allowed!');
+class PdfController extends CI_Controller{
+    function __construct(){
+        parent::__construct();
+        $this->load->model('CommonModel','common',true);
+        $this->load->model('RegistrationModel','registration',true);
+        $this->ip = getenv("REMOTE_ADDR");
+        $this->ststem_date=date('Y-m-d H:i:s');
+        $this->ststem_date_time=date('Y-m-d H:i:s');
+        //$this->session->unset_userdata('insert_id');
+    }
+	public function get_pdf_test(){
+        $data = array(
+            'title' => 'Add PDF | ERP',
+            'data' => 'Test'
+        );
+        generate_pdf("welcome.pdf", "welcome.php", $data);
+    }
+
+	
+}
+
+
+//welcome.php
+<html>
+<head>
+    <title>Generate PDF using Dompdf</title>
+   <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" /> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <!--  <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&display=swap" rel="stylesheet"> -->
+    <style type="text/css">
+    /*@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&display=swap');*/
+   @font-face {
+      font-family: 'Baloo Bhaina 2';
+      font-style: normal;
+      font-weight: 500;
+      src: url('https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&display=swap') format('truetype');
+    }
+    body{
+        font-family: 'Baloo Bhaina 2', cursive;
+    }
+.logo{
+    text-align:center;
+}
+.heading{
+    padding: 0;
+    margin:0;
+    font-size: 18px;
+}
+table tr{
+    font-size: 15px;
+}
+</style>
+</head>
+<body >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <table  width='100%' style='border-collapse: collapse;'>
+                    <thead>
+                        <tr class="logo">
+                            <?php 
+                            $path = base_url('assets/frontend/odisha-logo.png');
+                            $type = pathinfo($path, PATHINFO_EXTENSION);
+                            $data = file_get_contents($path);
+                            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data); 
+                            ?>
+                            <td  colspan="3">
+                                <img class="my_logo1" src="<?php echo $base64; ?>" alt="logo">
+                            </td> 
+                        </tr>
+                        <tr class="logo">
+                            <td  colspan="3">
+                                <h4 class="heading">ODISHA UNORGANISED WORKERS’SOCIAL SECURITY BOARD </h4>
+                                <small>ODISHA UNORGANISED WORKERS’SOCIAL SECURITY BOARD(ଓଡିଶା ଅଣସଂଗଠିତ ଶ୍ରମିକ ସାମାଜିକ ସୁରକ୍ଷା ବୋର୍ଡ )</small>
+                            </td> 
+                        </tr>
+                        <tr class="logo">
+                            <td  colspan="3">
+                                <h4 class="heading">LABOUR & ESI DEPARTMENT, ODISHA</h4>
+                                <small>(ଶ୍ରମ ଓ କର୍ମଚାରୀ ରାଜ୍ୟ ବୀମା ବିଭାଗ , ଓଡିଶା )</small>
+                            </td> 
+                        </tr>
+                        <tr class="logo">
+                            <td  colspan="3">
+                                <h4 class="heading">IDENTITY CARD (ପରିଚୟ ପତ୍ର)</h4>
+                            </td> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php
+                            $path = base_url('uploads/documents/1/profile.jpg');
+                            $type = pathinfo($path, PATHINFO_EXTENSION);
+                            $data = file_get_contents($path);
+                            $profile = 'data:image/' . $type . ';base64,' . base64_encode($data); 
+                            ?>
+                            <td width="30%">Regd. No. OD/BLS/UW/01/2020</td>
+                            <td width="30%"> <img class="my_logo1" src="<?php echo $profile; ?>" alt="logo" height="110px" width="100px"></td>
+                            <td width="40%">Date of Regd 18-12-2020</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Name (ନାମ): </td>
+                            <td width="50%" colspan="2">Sushanta Kumar patra</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Father / Husband’s Name (ପିତା / ସ୍ୱାମୀ ନାମ):</td>
+                            <td width="50%" colspan="2"> Ananda patra</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Permanent Address (ସ୍ଥାୟୀ ଠିକଣା): </td>
+                            <td width="50%" colspan="2">Balasore, Odisha</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Present Address (ବର୍ତ୍ତମାନ ଠିକଣା):</td>
+                            <td width="50%" colspan="2">Balasore, Odisha</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Gender (ଲିଙ୍ଗ): </td>
+                            <td width="50%" colspan="2">Male</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">District (ଜିଲ୍ଲା):</td>
+                            <td width="50%" colspan="2"> Balasore</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Date of Birth / Age (ଜନ୍ମ / ବୟସ ତାରିଖ): </td>
+                            <td width="50%" colspan="2">21-04-1992, 29yrs</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Marital Status(ବୈବାହିକ ସ୍ଥିତି):</td>
+                            <td width="50%" colspan="2">Single</td>
+                        </tr>
+
+                        <tr>
+                            <td width="50%" colspan="">Occupation (ବୃତ୍ତି):</td>
+                            <td width="50%" colspan="2">Farming</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Category (ବର୍ଗ) (SC/ST/OBC/Others): </td>
+                            <td width="50%" colspan="2">GEN</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Whether home-based worker /Self-employed orker / Wage orker / Others (ଘରୋଇ ଶ୍ରମିକ / ଆତ୍ମନିଯୁକ୍ତି ଶ୍ରମିକ / ଦିନ ମଜୁରିଆ / ଅନ୍ୟାନ୍ୟ  ଶ୍ରମିକ): </td>
+                            <td width="50%" colspan="2">Self Employed</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Aadhaar No. (ଆଧାର ସଂଖ୍ୟା ): </td>
+                            <td width="50%" colspan="2">934851212548555</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Bank Account No (ବ୍ୟାଙ୍କ ଖାତା ସଂଖ୍ୟା):</td>
+                            <td width="50%" colspan="2"> 93495244522</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Branch Name with Details (ବ୍ୟାଙ୍କ ଶାଖାର ନାମ ଓ ବିବରଣୀ ): </td>
+                            <td width="50%" colspan="2">nayapalli, bhubaneswar</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Mobile No. (If any)(ମୋବାଇଲ୍ ସଂଖ୍ୟା):</td>
+                            <td width="50%" colspan="2">Single</td>
+                        </tr>
+                       
+                       
+                    </tbody> 
+                    <tfoot>
+                        <tr>
+                            <td width="50%" colspan="" style="padding-bottom: 45px; padding-top: 25px"> Signature / Thumb Impression of Worker (ଶ୍ରମିକଙ୍କ ଦସ୍ତଖତ / ଟିପଚିହ୍ନ )</td>
+                            <td width="50%" colspan="2" style="padding-bottom: 45px; padding-top: 25px">Signature / Seal Registering Officer (ପଞ୍ଜୀକରଣ ଅଧିକାରୀଙ୍କ ଦସ୍ତଖତ/ମୋହର )</td>
+                        </tr>
+                        
+                        <tr>
+                            <td width="50%" colspan="">Place (ସ୍ଥାନ): Bhubanswaes</td>
+                            <td width="50%" colspan="2">Date (ତାରିଖ): 20-10-20</td>
+                        </tr>
+                        <tr>
+                            <td width="100%" colspan="3"><h4>Instruction :</h4></td>
+                        </tr>
+                        <tr>
+                            <td width="100%" colspan="3">
+                                <li>In case of change of address, application in Form-I to be made before the concerned authority (ଠିକଣା ପରିବର୍ତ୍ତନ କ୍ଷେତ୍ରରେ,ସମ୍ପୃକ୍ତ  ଅଧିକାରୀଙ୍କୁ ଫର୍ମ-୧ ରେ ଦରଖାସ୍ତ କରିବାକୁ ହେବ ).</li>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100%" colspan="3">
+                                <li>Loss mutilation / unauthorized retention entail penal consequences (ଏହି ପରିଚୟ ପତ୍ର କୁ ହାନି / ବିକୃତି / ଅନାଧିକୃତ ଧାରଣ କ୍ଷେତ୍ରରେ ଆଇନଗତ କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ଗ୍ରହଣ କରାଯିବ ).</li>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100%" colspan="3">
+                                <li>This card is not transferable (ଏହି ପରିଚୟ ପତ୍ରଟି ଅନଂତରଣୀୟ ନୁହେ ).</li>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="70%" colspan=""></td>
+                            <td width="30%" colspan="2">By order of the Governor</td>
+                        </tr>
+                        <tr>
+                            <td width="70%" colspan=""></td>
+                            <td width="30%" colspan="2">ANU GARG</td>
+                        </tr>
+                        <tr>
+                            <td width="70%" colspan=""></td>
+                            <td width="30%" colspan="2">Principal Secretary to Government</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>  
+    </div>
+</body>
+</html>
+        
