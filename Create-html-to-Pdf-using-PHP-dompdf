@@ -1,0 +1,126 @@
+<!-- Create html to pdf in php & dompdf  -->
+Step-1
+	dompdf download link=https://github.com/dompdf/dompdf
+	extract dompdf_0-8-6.zip file 
+	folder name is dompdf
+step-2
+	Create a index.php file 
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//index.php
+<?php
+//set_include_path(get_include_path() . PATH_SEPARATOR . "dompdf");
+
+require_once "dompdf/autoload.inc.php";
+use Dompdf\Dompdf;
+use Dompdf\Options;
+$options = new Options();
+$options->set('defaultFont', 'sans-serif');
+$pdf = new DOMPDF($options);
+//image rendaring
+ $path = 'assets/frontend/odisha-logo.png';
+$type = pathinfo($path, PATHINFO_EXTENSION);
+$data = file_get_contents($path);
+$base64 = 'data:image/' . $type . ';base64,' . base64_encode($data); 
+
+$html = '
+ <style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+<table border="1" width="100%" style="border-collapse: collapse;">
+                    <thead>
+                        <tr class="logo">
+                            <?php 
+                            
+                            ?>
+                            <td  colspan="2">
+                                <img class="my_logo1" src="'.$base64.'" alt="logo">
+                            </td> 
+                        </tr>
+                        <tr class="logo">
+                            <td  colspan="2">
+                                <h3>ODISHA UNORGANISED WORKERS’SOCIAL SECURITY BOARD</h3>
+                                <small>(ଓଡିଶା ଅଣସଂଗଠିତ ଶ୍ରମିକ ସାମାଜିକ ସୁରକ୍ଷା ବୋର୍ଡ )</small>
+                            </td> 
+                        </tr>
+                        <tr class="logo">
+                            <td  colspan="2">
+                                <h3>LABOUR & ESI DEPARTMENT, ODISHA</h3>
+                                <small>(ଶ୍ରମ ଓ କର୍ମଚାରୀ ରାଜ୍ୟ ବୀମା ବିଭାଗ , ଓଡିଶା )</small>
+                            </td> 
+                        </tr>
+                        <tr class="logo">
+                            <td  colspan="2">
+                                <h3>IDENTITY CARD (ପରିଚୟ ପତ୍ର)</h3>
+                            </td> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="40%">Regd. No. OD/BLS/UW/01/2020</td>
+                            <td width="20%"> <img class="my_logo1" src="" alt="logo" height="150px" width="100px"></td>
+                            <td width="40%">Date of Regd 18-12-2020</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Name (ନାମ): </td>
+                            <td width="50%" colspan="2">Sushanta Kumar patra</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Father / Husband’s Name (ପିତା / ସ୍ୱାମୀ ନାମ):</td>
+                            <td width="50%" colspan="2"> Ananda patra</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Permanent Address (ସ୍ଥାୟୀ ଠିକଣା): </td>
+                            <td width="50%" colspan="2">Balasore, Odisha</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Present Address (ବର୍ତ୍ତମାନ ଠିକଣା):</td>
+                            <td width="50%" colspan="2">Balasore, Odisha</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Gender (ଲିଙ୍ଗ): </td>
+                            <td width="50%" colspan="2">Male</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">District (ଜିଲ୍ଲା):</td>
+                            <td width="50%" colspan="2"> Balasore</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" >Date of Birth / Age (ଜନ୍ମ / ବୟସ ତାରିଖ): </td>
+                            <td width="50%" colspan="2">21-04-1992, 29yrs</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" colspan="">Marital Status(ବୈବାହିକ ସ୍ଥିତି):</td>
+                            <td width="50%" colspan="2">Single</td>
+                        </tr>
+                    </tbody> 
+                </table>
+'; 
+$html .= '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">';
+$pdf->load_html($html);
+$pdf->render();
+// Output  PDF (1 = download and 0 = preview)
+$pdf->stream("index.php", array("Attachment" => 0));
