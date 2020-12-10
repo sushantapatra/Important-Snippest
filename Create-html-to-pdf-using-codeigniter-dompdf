@@ -1,5 +1,6 @@
 <!-- Create html to pdf in codeigniter & dompdf  -->
 Step-1
+	dompdf download link=https://github.com/dompdf/dompdf
 	extract dompdf_0-8-6.zip file in application/libraries folder
 	
 step-2
