@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities',
+          pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+		google.visualization.events.addListener(chart, 'select', selectHandler);
+        chart.draw(data, options);
+		function selectHandler() {
+			var selectedItem = chart.getSelection()[0];
+			if (selectedItem) {
+				var task = data.getValue(selectedItem.row, 0);
+				var taskValue =data.getValue(selectedItem.row, 1);
+				
+				if (task == "Work") {
+					//go to action?
+					window.open("index.php?value="+taskValue, "_self", true);
+				}
+				
+			}
+            
+		}
+    }
+	  
+    </script>
+  </head>
+  <body>
+  <h1>Gogle Pie Chart with Seletect Column and send a anathor location</h1>
+    <div id="donutchart" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
