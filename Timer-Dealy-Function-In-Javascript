@@ -1,0 +1,19 @@
+
+
+let timer;
+const debounce =(fn,delay)=>{
+    if(timer) clearTimeout(timer) 
+        timer=setTimeout(fn,delay);
+}
+
+
+const checkGenCurMeterReading=(prevValue)=>{
+   let nextValue = $('.present_meter_g').val();
+    debounce(()=>{
+        if( parseInt(prevValue) > parseInt(nextValue) ){
+            $('#gen_prev_meter_error').html('should be less than Present meter reading');
+        }else{
+            $('#gen_prev_meter_error').html('');  
+        }
+    },300);
+}
