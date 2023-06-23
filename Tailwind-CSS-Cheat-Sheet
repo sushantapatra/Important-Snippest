@@ -8,75 +8,23 @@
 => https://flaviocopes.com/tailwind-cheat-sheet/
 
 
-##Layout
-
-
-##Grid
-
-
-##Flexbox
-
-
-##Box Alignment
-
-
-##Typography
-
-
-
-##Spacing
-
-
-##Borders
-
-
-##Backgrounds
-
-
-
-##Tables
-
-
-##Effects
-
-
-
-##Transitions and Animation
-
-
-
-##Interactivity
-
-
-
-##Filters
-
-
-
-##SVG
-
-
 ============  TailwindCSS Cheatsheet (ARCHIVED) ========================
 Default Config
-View the TailwindCSS default configuration
-
-Breakpoints: sm:640px | md:768px | lg:1024px | xl:1280px
-
-Colors: transparent, current, black, white, grays, reds, oranges, yellows, greens, teals, blues, indigos, purples, pinks
-
-Spacing: 0|1|2|3|4|5|6|8|10|12|16|20|24|32|40|48|56|64|px
-
-Supported Variants: responsive|group-hover|focus-within|first|last|odd|even|hover|focus|active|visited|disabled|motion-safe|motion-reduce
+    View the TailwindCSS default configuration        
+        Breakpoints: sm:640px | md:768px | lg:1024px | xl:1280px        
+        Colors: transparent, current, black, white, grays, reds, oranges, yellows, greens, teals, blues, indigos, purples, pinks  
+        Spacing: 0|1|2|3|4|5|6|8|10|12|16|20|24|32|40|48|56|64|px  
+        Supported Variants: responsive|group-hover|focus-within|first|last|odd|even|hover|focus|active|visited|disabled|motion-safe|motion-reduce
 
 Utility Classes
 
 LAYOUT
     Container
         .container
-    
+
     Box Sizing
-        .box-[border|content]
-    
+        .box-[border|content]   
+
     Display    
         .block
         .inline-block
@@ -233,29 +181,39 @@ GRID
 BOX ALIGNMENT
     Justify Content
         .justify-[start|end|center|between|around|evenly]
+
     Justify Items
         .justify-items-[auto|start|end|center|stretch]
+
     Justify Self
         .justify-self-[auto|start|end|center|stretch]
+
     Align Content
         .content-[center|start|end|between|around|evenly]
+
     Align Items
         .items-[start|end|center|baseline|stretch]
+
     Align Self
         .self-[auto|start|end|center|stretch]
+
     Place Content
         .place-content-[center|start|end|between|around|evenly|stretch]
+
     Place Items
         .place-items-[auto|start|end|center|stretch]
+
     Place Self
         .place-self-[auto|start|end|center|stretch]
 
 SPACING
     Padding
         .[p|py|px|pt|pr|pb|pl]-[0|1|2|3|4|5|6|10|12|16|20|24|32|40|48|56|64|px]
+
     Margin
         .[m|my|mx|mt|mr|mb|ml]-[0|1|2|3|4|5|6|10|12|16|20|24|32|40|48|56|64|auto|px]
         .-[m|my|mx|mt|mr|mb|ml]-[0|1|2|3|4|5|6|10|12|16|20|24|32|40|48|56|64|px]
+
     Space Between
         .space-[x|y]-[0|1|2|3|4|5|6|10|12|16|20|24|32|40|48|56|64|px|reverse]
         .-space-[x|y]-[0|1|2|3|4|5|6|10|12|16|20|24|32|40|48|56|64|px]
@@ -268,31 +226,41 @@ SIZING
         .w-[1/6|2/6|3/6|4/6|5/6]
         .w-[1/12|2/12|3/12|4/12|5/12|6/12|7/12|8/12|9/12|10/12|11/12]
         .w-[full|screen]
+
     Min-Width
         .min-w-[0|full]
+
     Max-Width
         .max-w-[none|xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|full]
         .max-w-screen-[sm|md|lg|xl]
+
     Height
         .h-[0|1|2|3|4|5|6|10|12|16|20|24|32|40|48|56|64|auto|px|full|screen]
+
     Min-Height
         .min-h-[0,full,screen]
+
     Max-Height
         .max-h-[full,screen]
 
 TYPOGRAPHY
     Font Family
         .font[sans|serif|mono]
+
     Font Size
         .text-[xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl]
+
     Font Smoothing
         .antialiased
         .subpixel-antialiased
+
     Font Style
         .italic
         .not-italic
+
     Font Weight
         .font-[hairline|thin|light|normal|medium|semibold|bold|extrabold|black]
+
     Font Variant Numeric
         .normal-nums
         .ordinal
@@ -303,14 +271,19 @@ TYPOGRAPHY
         .tabular-nums
         .diagonal-fractions
         .stacked-fractions
+
     Letter Spacing
         .tracking-[tighter|tight|normal|wide|wider|widest]
+
     Line Height
         .leading-[3|4|5|6|7|8|9|10|none|tight|snug|normal|relaxed|loose]
+
     List Style Type
         .list-[none|disc|decimal]
+
     List Style Position
         .list-[inside|outside]
+
     Placeholder Color
         .placeholder-[transparent|current|black|white]
         .placeholder-gray-[100|200|300|400|500|600|700|800|900]
@@ -323,10 +296,13 @@ TYPOGRAPHY
         .placeholder-indigo-[100|200|300|400|500|600|700|800|900]
         .placeholder-purple-[100|200|300|400|500|600|700|800|900]
         .placeholder-pink-[100|200|300|400|500|600|700|800|900]
+
     Placeholder Opacity
         .placeholder-opacity-[0|25|50|75|100]
+
     Text Align
         .text-[left|center|right|justify]
+
     Text Color
         .text-[transparent|current|black|white]
         .text-gray-[100|200|300|400|500|600|700|800|900]
@@ -339,21 +315,27 @@ TYPOGRAPHY
         .text-indigo-[100|200|300|400|500|600|700|800|900]
         .text-purple-[100|200|300|400|500|600|700|800|900]
         .text-pink-[100|200|300|400|500|600|700|800|900]
+
     Text Opacity
         .text-opacity-[0|25|50|75|100]
+
     Text Decoration
         .underline
         .line-through
         .no-underline
+
     Text Transform
         .uppercase
         .lowercase
         .capitalize
         .normal-case
+
     Vertical Align
         .align-[baseline|top|middle|bottom|text-top|text-bottom]
+
     Whitespace
         .whitespace-[normal|no-wrap|pre|pre-line|pre-wrap]
+
     Word Break
         .break-[normal|words|all]
         .truncate
@@ -361,8 +343,10 @@ TYPOGRAPHY
 BACKGROUNDS
     Background Attachment
         .bg-[fixed|local|scroll]
+
     Background Clip
     .bg-clip-[border|padding|content|text]
+
     Background Color
         .bg-[transparent|current|black|white]
         .bg-gray-[100|200|300|400|500|600|700|800|900]
@@ -375,8 +359,10 @@ BACKGROUNDS
         .bg-indigo-[100|200|300|400|500|600|700|800|900]
         .bg-purple-[100|200|300|400|500|600|700|800|900]
         .bg-pink-[100|200|300|400|500|600|700|800|900]
+
     Background Opacity
         .bg-opacity-[0|25|50|75|100]
+
     Background Position
         .bg-bottom
         .bg-center
@@ -387,6 +373,7 @@ BACKGROUNDS
         .bg-right-bottom
         .bg-right-top
         .bg-top
+
     Background Repeat
         .bg-repeat
         .bg-no-repeat
@@ -394,11 +381,14 @@ BACKGROUNDS
         .bg-repeat-y
         .bg-repeat-round
         .bg-repeat-space
+
     Background Size
         .bg-[auto|cover|contain]
+
     Background Image
         .bg-none
         .bg-gradient-to-[t|tr|r|br|b|bl|l|tl]
+
     Gradient Color Stops
         .from-[transparent|current|black|white]
         .from-gray-[100|200|300|400|500|600|700|800|900]
@@ -436,167 +426,146 @@ BACKGROUNDS
 
 
 BORDERS
-Border Radius
+    Border Radius
+        .rounded
+        .rounded-[none|sm|md|lg|xl|2xl|3xl|full]
+        .rounded-t-[none|sm|md|lg|xl|2xl|3xl|full]
+        .rounded-r-[none|sm|md|lg|xl|2xl|3xl|full]
+        .rounded-b-[none|sm|md|lg|xl|2xl|3xl|full]
+        .rounded-l-[none|sm|md|lg|xl|2xl|3xl|full]
+        .rounded-tl-[none|sm|md|lg|xl|2xl|3xl|full]
+        .rounded-tr-[none|sm|md|lg|xl|2xl|3xl|full]
+        .rounded-bl-[none|sm|md|lg|xl|2xl|3xl|full]
+        .rounded-br-[none|sm|md|lg|xl|2xl|3xl|full]
+    
+    Border Width
+        .border
+        .border-[0|2|4|8]
+        .border-[t|r|b|l]
+        .border-t-[0|2|4|8]
+        .border-r-[0|2|4|8]
+        .border-b-[0|2|4|8]
+        .border-l-[0|2|4|8]
+    
+    Border Color
+        .border-[transparent|current|black|white]
+        .border-gray-[100|200|300|400|500|600|700|800|900]
+        .border-red-[100|200|300|400|500|600|700|800|900]
+        .border-orange-[100|200|300|400|500|600|700|800|900]
+        .border-yellow-[100|200|300|400|500|600|700|800|900]
+        .border-green-[100|200|300|400|500|600|700|800|900]
+        .border-teal-[100|200|300|400|500|600|700|800|900]
+        .border-blue-[100|200|300|400|500|600|700|800|900]
+        .border-indigo-[100|200|300|400|500|600|700|800|900]
+        .border-purple-[100|200|300|400|500|600|700|800|900]
+        .border-pink-[100|200|300|400|500|600|700|800|900]
+    
+    Border Opacity
+        .border-opacity-[0|25|50|75|100]
+    Border Style
+        .border-[solid|dashed|dotted|double|none]
+    Divide Width
+        .divide-[x|y]
+        .divide-x-[0|2|4|8|reverse]
+        .divide-y-[0|2|4|8|reverse]
+    Divide Color
+        .divide-[transparent|current|black|white]
+        .divide-gray-[100|200|300|400|500|600|700|800|900]
+        .divide-red-[100|200|300|400|500|600|700|800|900]
+        .divide-orange-[100|200|300|400|500|600|700|800|900]
+        .divide-yellow-[100|200|300|400|500|600|700|800|900]
+        .divide-green-[100|200|300|400|500|600|700|800|900]
+        .divide-teal-[100|200|300|400|500|600|700|800|900]
+        .divide-blue-[100|200|300|400|500|600|700|800|900]
+        .divide-indigo-[100|200|300|400|500|600|700|800|900]
+        .divide-purple-[100|200|300|400|500|600|700|800|900]
+        .divide-pink-[100|200|300|400|500|600|700|800|900]
+    Divide Opacity
+        .divide-opacity-[0|25|50|75|100]
+    Divide Style
+        .divide-[solid|dashed|dotted|double|none]
 
-.rounded
-.rounded-[none|sm|md|lg|xl|2xl|3xl|full]
-.rounded-t-[none|sm|md|lg|xl|2xl|3xl|full]
-.rounded-r-[none|sm|md|lg|xl|2xl|3xl|full]
-.rounded-b-[none|sm|md|lg|xl|2xl|3xl|full]
-.rounded-l-[none|sm|md|lg|xl|2xl|3xl|full]
-.rounded-tl-[none|sm|md|lg|xl|2xl|3xl|full]
-.rounded-tr-[none|sm|md|lg|xl|2xl|3xl|full]
-.rounded-bl-[none|sm|md|lg|xl|2xl|3xl|full]
-.rounded-br-[none|sm|md|lg|xl|2xl|3xl|full]
-Border Width
 
-.border
-.border-[0|2|4|8]
-.border-[t|r|b|l]
-.border-t-[0|2|4|8]
-.border-r-[0|2|4|8]
-.border-b-[0|2|4|8]
-.border-l-[0|2|4|8]
-Border Color
-
-.border-[transparent|current|black|white]
-.border-gray-[100|200|300|400|500|600|700|800|900]
-.border-red-[100|200|300|400|500|600|700|800|900]
-.border-orange-[100|200|300|400|500|600|700|800|900]
-.border-yellow-[100|200|300|400|500|600|700|800|900]
-.border-green-[100|200|300|400|500|600|700|800|900]
-.border-teal-[100|200|300|400|500|600|700|800|900]
-.border-blue-[100|200|300|400|500|600|700|800|900]
-.border-indigo-[100|200|300|400|500|600|700|800|900]
-.border-purple-[100|200|300|400|500|600|700|800|900]
-.border-pink-[100|200|300|400|500|600|700|800|900]
-Border Opacity
-
-.border-opacity-[0|25|50|75|100]
-Border Style
-
-.border-[solid|dashed|dotted|double|none]
-Divide Width
-
-.divide-[x|y]
-.divide-x-[0|2|4|8|reverse]
-.divide-y-[0|2|4|8|reverse]
-Divide Color
-
-.divide-[transparent|current|black|white]
-.divide-gray-[100|200|300|400|500|600|700|800|900]
-.divide-red-[100|200|300|400|500|600|700|800|900]
-.divide-orange-[100|200|300|400|500|600|700|800|900]
-.divide-yellow-[100|200|300|400|500|600|700|800|900]
-.divide-green-[100|200|300|400|500|600|700|800|900]
-.divide-teal-[100|200|300|400|500|600|700|800|900]
-.divide-blue-[100|200|300|400|500|600|700|800|900]
-.divide-indigo-[100|200|300|400|500|600|700|800|900]
-.divide-purple-[100|200|300|400|500|600|700|800|900]
-.divide-pink-[100|200|300|400|500|600|700|800|900]
-Divide Opacity
-
-.divide-opacity-[0|25|50|75|100]
-Divide Style
-
-.divide-[solid|dashed|dotted|double|none]
 TABLES
-Border Collapse
+    Border Collapse
+        .border-[collapse|seperate]
+    Table Layout
+        .table-[auto|fixed]
 
-.border-[collapse|seperate]
-Table Layout
-
-.table-[auto|fixed]
 EFFECTS
-Box Shadow
+    Box Shadow
+        .shadow
+        .shadow-[xs|sm|md|lg|xl|2xl|inner|outline|none]
+    Opacity
+        .opacity-[0|25|50|75|100]
 
-.shadow
-.shadow-[xs|sm|md|lg|xl|2xl|inner|outline|none]
-Opacity
-
-.opacity-[0|25|50|75|100]
 TRANSITIONS AND ANIMATION
-Transition Property
+    Transition Property
+        .transition
+        .transition-[none|all|colors|opacity|shadow|transform]
+    Transition Duration
+        .duration-[75|100|150|200|300|500|700|1000]
+    Transition Timing Function
+        .ease-[linear|in|out|in-out]
+    Transition Delay
+        .delay-[75|100|150|200|300|500|700|1000]
+    Animation
+        .animate-[none|spin|ping|pulse|bounce]
 
-.transition
-.transition-[none|all|colors|opacity|shadow|transform]
-Transition Duration
-
-.duration-[75|100|150|200|300|500|700|1000]
-Transition Timing Function
-
-.ease-[linear|in|out|in-out]
-Transition Delay
-
-.delay-[75|100|150|200|300|500|700|1000]
-Animation
-
-.animate-[none|spin|ping|pulse|bounce]
 TRANSFORMS
-Scale
+    Scale
+        .scale-[0|50|75|90|95|100|105|110|125|150]
+        .scale-x-[0|50|75|90|95|100|105|110|125|150]
+        .scale-y-[0|50|75|90|95|100|105|110|125|150]
+    Rotate
+        .rotate-[0|1|2|3|6|12|45|90|180]
+        .-rotate-[1|2|3|6|12|45|90|180]
+    Translate
+        .translate-x-[0|1|2|3|4|5|6|7|8|10|12|16|20|24|32|40|48|56|64|px|full|1/2]
+        .-translate-x-[1|2|3|4|5|6|7|8|10|12|16|20|24|32|40|48|56|64|px|full|1/2]
+        .translate-y-[0|1|2|3|4|5|6|7|8|10|12|16|20|24|32|40|48|56|64|px|full|1/2]
+        .-translate-y-[1|2|3|4|5|6|7|8|10|12|16|20|24|32|40|48|56|64|px|full|1/2]
+    Skew
+        .skew-x-[0|1|2|3|6|12]
+        .-skew-x-[1|2|3|6|12]
+        .skew-y-[0|1|2|3|6|12]
+        .-skew-x-[1|2|3|6|12]
+    Transform Origin
+        .origin-center
+        .origin-top
+        .origin-top-right
+        .origin-right
+        .origin-bottom-right
+        .origin-bottom
+        .origin-bottom-left
+        .origin-left
+        .origin-top-left
 
-.scale-[0|50|75|90|95|100|105|110|125|150]
-.scale-x-[0|50|75|90|95|100|105|110|125|150]
-.scale-y-[0|50|75|90|95|100|105|110|125|150]
-Rotate
-
-.rotate-[0|1|2|3|6|12|45|90|180]
-.-rotate-[1|2|3|6|12|45|90|180]
-Translate
-
-.translate-x-[0|1|2|3|4|5|6|7|8|10|12|16|20|24|32|40|48|56|64|px|full|1/2]
-.-translate-x-[1|2|3|4|5|6|7|8|10|12|16|20|24|32|40|48|56|64|px|full|1/2]
-.translate-y-[0|1|2|3|4|5|6|7|8|10|12|16|20|24|32|40|48|56|64|px|full|1/2]
-.-translate-y-[1|2|3|4|5|6|7|8|10|12|16|20|24|32|40|48|56|64|px|full|1/2]
-Skew
-
-.skew-x-[0|1|2|3|6|12]
-.-skew-x-[1|2|3|6|12]
-.skew-y-[0|1|2|3|6|12]
-.-skew-x-[1|2|3|6|12]
-Transform Origin
-
-.origin-center
-.origin-top
-.origin-top-right
-.origin-right
-.origin-bottom-right
-.origin-bottom
-.origin-bottom-left
-.origin-left
-.origin-top-left
 INTERACTIVITY
-Appearance
+    Appearance
+        .appearance-none
+    Cursor
+        .cursor-[auto|default|pointer|wait|text|move|not-allowed]
+    Outline
+        .outline-[none|white|black]
+    Pointer Events
+        .pointer-events-[none|auto]
+    Resize
+        .resize
+        .resize-[none|y|x]
+    User Select
+        .select-[none|text|all|auto]
 
-.appearance-none
-Cursor
-
-.cursor-[auto|default|pointer|wait|text|move|not-allowed]
-Outline
-
-.outline-[none|white|black]
-Pointer Events
-
-.pointer-events-[none|auto]
-Resize
-
-.resize
-.resize-[none|y|x]
-User Select
-
-.select-[none|text|all|auto]
 SVG
-Fill
+    Fill
+        .fill-current
+    Stroke
+        .stroke-current
+    Stroke Width
+        .stroke-[0|1|2]
 
-.fill-current
-Stroke
 
-.stroke-current
-Stroke Width
-
-.stroke-[0|1|2]
 ACCESSIBILITY
-Screen Readers
-
-.sr-only
-.not-sr-only
+    Screen Readers
+        .sr-only
+        .not-sr-only
